@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod=" 5 seconds" debug="true">
+    <springProperty scope="context" name="logPath" source="log.dir" defaultValue="logs"/>
+    <springProperty scope="context" name="logLevel" source="log.level" defaultValue="debug"/>
+    <property name="LOG_PATH" value="${logPath}"/>
+    <property name="LOG_LEVEL" value="${logLevel}"/>
+    <property name="OUTPUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%boldYellow(%thread)] [%X{requestId}]  %highlight(%-5level) %boldGreen(%logger{15}) - %msg %n"/>
+    <!--日志文件保留最大天数-->
+    <property name="MAXDAY" value="7"/>
+
+    <!--日志文件滚动阈值-->
+    <property name="MAXSIZE" value="100MB"/>
+
+    <!-- 控制台 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${OUTPUT_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+</configuration>
