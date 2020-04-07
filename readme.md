@@ -1,3 +1,22 @@
+### Demo
+1.从零学习netty, 目前是学习demo阶段, 可在 com.base目录查看
+
+demo1: DiscardServer
+demo2: EchoServer
+demo3: TimeServer
+demo4: TimeServerV2
+demo5: UpTimeServer
+
+2.基本的协议服务器
+
+TelnetServer
+
+ChatServer
+
+持续更新中。。。
+
+3.高级阶段 -> 手撕IM
+
 ### 基础设施:
  1.mysql + Mybatis Plus
  2.redis
@@ -5,16 +24,16 @@
  4.netty
  5.zk
 
-## 基础配置
+### 基础配置
  1.日志打印标准
  
  
  
- ## 描述
+ ### 描述
  香菜IM 是一个后端即时通讯服务
  
  
- ## 功能点
+ ### 功能点
  1.单聊
  
  业务流程：用户A给用户B发送消息, B收到后给A回ok
@@ -29,14 +48,14 @@
  2.群聊
  
  
- ## 架构
+ ### 架构
  
  
  
- ## 技术选型
+ ### 技术选型
  
  
  
- ## 备注
+ ### 备注
  
  
