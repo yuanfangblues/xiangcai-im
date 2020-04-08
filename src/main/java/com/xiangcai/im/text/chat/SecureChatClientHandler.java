@@ -20,4 +20,6 @@ public class SecureChatClientHandler extends SimpleChannelInboundHandler<String>
         cause.printStackTrace();
         ctx.close();
     }
+
+
 }

@@ -24,11 +24,11 @@ public class SecureChatServer {
         SslContext sslContext = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
 
         EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workGourp = new NioEventLoopGroup();
+        EventLoopGroup workGroup = new NioEventLoopGroup();
 
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workGourp)
+            b.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .childHandler(new SecureChatServerInitializer(sslContext));
@@ -36,7 +36,7 @@ public class SecureChatServer {
             b.bind(PORT).sync().channel().closeFuture().sync();
         } finally {
             bossGroup.shutdownGracefully();
-            workGourp.shutdownGracefully();
+            workGroup.shutdownGracefully();
         }
     }
 }

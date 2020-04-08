@@ -25,7 +25,6 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
     public static AtomicInteger userCount = new AtomicInteger(0);
 
 
-
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
 
@@ -36,9 +35,27 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
             return;
         }
 
+        try {
+            sendMsg(ctx, msg, currChannel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ctx.channel().writeAndFlush("[sys] sys error break !");
+            ctx.close();
+        }
+
+
+    }
+
+    private void sendMsg(ChannelHandlerContext ctx, String msg, Channel currChannel) {
         if (msg.contains("#call")) {
             String[] split = msg.split(":");
-            String s = split[1];
+            String s = split[1].trim();
+            String toYouMsg = "";
+            if (split.length > 2) {
+                toYouMsg = split[2].trim();
+            }else {
+                toYouMsg = "hello";
+            }
 
             Optional<Connection> connection = connectionManager.selectConnection(s);
             if (connection.isPresent()) {
@@ -46,12 +63,12 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
                 if (channel.equals(currChannel)) {
                     channel.writeAndFlush("[you] not talk you self!");
                 }else{
-                    channel.writeAndFlush("[other] hello!");
+                    channel.writeAndFlush("[]" + connectionManager.selectConnection(s).get().connectionId() + toYouMsg);
                 }
 
             }else{
                 log.warn("people is not exist! :{}", s);
-                currChannel.writeAndFlush("[sys] command not found !");
+                currChannel.writeAndFlush("[sys] people is not onLine or not exist !");
             }
 
         }else if("#bye".equals(msg.toLowerCase())) {
@@ -60,8 +77,6 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
         }else{
             currChannel.writeAndFlush("[you] " + msg + '\n');
         }
-
-
     }
 
     @Override
@@ -88,6 +103,7 @@ public class SecureChatServerHandler extends SimpleChannelInboundHandler<String>
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
+        ctx.channel().writeAndFlush("[sys] sys error break !");
         ctx.close();
     }
 }
