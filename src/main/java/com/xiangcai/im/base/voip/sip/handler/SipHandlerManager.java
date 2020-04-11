@@ -2,7 +2,9 @@ package com.xiangcai.im.base.voip.sip.handler;
 
 import com.xiangcai.im.base.voip.UserAgent;
 import com.xiangcai.im.base.voip.manager.challenge.ChallengeManager;
+import com.xiangcai.im.base.voip.manager.transaction.ClientTransaction;
 import com.xiangcai.im.base.voip.sdp.SDPManager;
+import com.xiangcai.im.base.voip.sip.pack.SipRequest;
 
 /**
  * @author :元放
@@ -42,5 +44,13 @@ public class SipHandlerManager {
     public void setSdpManager(SDPManager sdpManager) {
         inviteHandler.setSdpManager(sdpManager);
         optionsHandler.setSdpManager(sdpManager);
+    }
+
+    public ClientTransaction preProcessInvite(SipRequest sipRequest) {
+        return null;
+    }
+
+    public ClientTransaction preProcessRegister(SipRequest sipRequest) {
+        return null;
     }
 }

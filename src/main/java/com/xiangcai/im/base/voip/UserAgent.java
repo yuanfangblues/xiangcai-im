@@ -13,7 +13,10 @@ import com.xiangcai.im.base.voip.rtp.MediaManager;
 import com.xiangcai.im.base.voip.rtp.MediaMode;
 import com.xiangcai.im.base.voip.sdp.SDPManager;
 import com.xiangcai.im.base.voip.sip.SipListener;
+import com.xiangcai.im.base.voip.sip.SipURI;
+import com.xiangcai.im.base.voip.sip.exp.SipUriSyntaxException;
 import com.xiangcai.im.base.voip.sip.handler.SipHandlerManager;
+import com.xiangcai.im.base.voip.sip.pack.SipRequest;
 
 import java.net.SocketException;
 import java.util.ArrayList;
@@ -62,6 +65,10 @@ public class UserAgent {
 
     private ChallengeManager challengeManager;
 
+    private InitialRequestManager initialRequestManager;
+
+    private MidDialogRequestManager midDialogRequestManager;
+
 
     private List<String> peers;
 
@@ -69,6 +76,8 @@ public class UserAgent {
 
 
     private MediaManager mediaManager;
+
+    private int cseqCounter;
 
 
 
@@ -126,7 +135,6 @@ public class UserAgent {
         sipHandlerManager.setSdpManager(sdpManager);
         sipHandlerManager.setSdpManager(sdpManager);
 
-        this.soundManager = soundManager;
         mediaManager = new MediaManager(this);
 
     }
@@ -157,5 +165,52 @@ public class UserAgent {
 
     public Echo getEcho() {
         return null;
+    }
+
+
+    public SipRequest register() throws SipUriSyntaxException {
+        return uac.register();
+    }
+
+    public void unregister() throws SipUriSyntaxException {
+        uac.unregister();
+    }
+
+    public SipRequest invite(String requestUri, String callId)
+            throws SipUriSyntaxException {
+        return uac.invite(requestUri, callId);
+    }
+
+    public String getDomain() {
+
+        return null;
+    }
+
+    public String getUserpart() {
+        return null;
+    }
+
+    public InitialRequestManager getInitialRequestManager() {
+        return initialRequestManager;
+    }
+
+    public SipListener getSipListener() {
+        return sipListener;
+    }
+
+    public String generateCSeq(String method) {
+        StringBuffer buf = new StringBuffer();
+        buf.append(cseqCounter++);
+        buf.append(' ');
+        buf.append(method);
+        return buf.toString();
+    }
+
+    public SipURI getOutboundProxy() {
+        return null;
+    }
+
+    public SipHandlerManager getSipHandlerManager() {
+        return sipHandlerManager;
     }
 }
