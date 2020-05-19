@@ -19,7 +19,8 @@
 
 package com.xiangcai.im.base.voip.sdp;
 
-import net.sourceforge.peers.media.MediaManager;
+
+import com.xiangcai.im.base.voip.rtp.MediaManager;
 
 public class Codec {
 

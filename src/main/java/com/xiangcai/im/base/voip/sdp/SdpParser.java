@@ -19,7 +19,8 @@
 
 package com.xiangcai.im.base.voip.sdp;
 
-import net.sourceforge.peers.rtp.RFC3551;
+
+import com.xiangcai.im.base.voip.rtp.RFC3551;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

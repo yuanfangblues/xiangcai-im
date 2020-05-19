@@ -37,7 +37,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
- * can be instantiated on UAC INVITE sending or on UAS 200 OK sending 
+ * can be instantiated on  INVITE sending or on UAS 200 OK sending
  */
 @Slf4j
 public class RtpSession {

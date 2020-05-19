@@ -11,6 +11,7 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 
 /**
  * telnet client
@@ -48,20 +49,12 @@ public class TelnetClient {
         //启动链接
         Channel ch = b.connect(HOST, PORT).sync().channel();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader in = new BufferedReader(new StringReader("DX0001|  23|2|801|0|20090312113024|"));
 
-        while (true) {
-            String line = in.readLine();
-            if (line == null) {
-                break;
-            }
-            //发送接收到的数据到服务端
-            ch.writeAndFlush(line + "\r\n");
+        String line = in.readLine();
+        //发送接收到的数据到服务端
+        ch.writeAndFlush(line + "\r\n");
 
-            if ("bye".equals(line.toLowerCase())) {
-                ch.closeFuture().sync();
-                break;
-            }
-        }
+        ch.closeFuture().sync();
     }
 }

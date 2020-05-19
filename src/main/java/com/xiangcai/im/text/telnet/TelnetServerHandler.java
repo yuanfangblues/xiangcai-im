@@ -4,6 +4,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetAddress;
 import java.util.Date;
@@ -12,24 +13,11 @@ import java.util.Date;
  * @author :元放
  * @date :2020-04-05 22:59
  **/
+@Slf4j
 public class TelnetServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-
-        String response;
-        boolean close = false;
-        if (msg.isEmpty()) {
-            response = "Please type something.\r\n";
-        } else if ("bye".equals(msg.toLowerCase())) {
-            response = "Have a good day!\r\n";
-            close = true;
-        } else {
-            response = "Did you say '" + msg + "'?\r\n";
-        }
-        ChannelFuture future = ctx.write(response);
-        if (close) {
-            future.addListener(ChannelFutureListener.CLOSE);
-        }
+        log.debug("read msg:{}", msg);
     }
 
     @Override
